@@ -1,0 +1,6 @@
+---
+# tasks for eucalyptus-setup
+
+- include: repositories.yml
+- include: packages.yml
+

@@ -1,0 +1,22 @@
+---
+galaxy_info:
+  author: John Mille
+  description: Setup all packages on eucalyptus components according to their group-role
+  company: Eucalyptus
+  # Some suggested licenses:
+  - Apache
+  min_ansible_version: 1.6
+  platforms:
+  - name: RHEL
+    versions:
+    - 6
+  - name: CentOS
+    versions:
+    - 6
+  categories:
+  - cloud
+  - cloud:ec2
+  - clustering
+  - packaging
+dependencies: []
+

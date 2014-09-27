@@ -1,0 +1,28 @@
+####################################################################
+#
+# Repositories setup and configuration
+#
+
+- name: Setup repositories
+  yum: name={{ item }} state=present
+  with_items:
+  - "{{ euca_repo_url }}"
+  - "{{ euca2ools_repo_url }}"
+  - "{{ epel_repo_url }}"
+  - "{{ elrepo_repo_url }}"
+  tags:
+  - packages
+
+- name: Use Eucalyptus local repositories
+  lineinfile: regexp=mirrorlist line="baseurl={{ euca_local_repo_url }}" dest="{{ euca_repo_file }}"
+  tags:
+  - packages
+  when:
+  - euca_use_local_repo
+
+- name: Use euca2ools local repositories
+  lineinfile: regexp=mirrorlist line="baseurl={{ euca2ools_local_repo_url }}" dest="{{ euca2ools_repo_file }}"
+  tags:
+  - packages
+  when:
+  - euca_use_local_repo

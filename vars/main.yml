@@ -1,0 +1,29 @@
+---
+# vars file for eucalyptus-setup
+
+#############################################################
+#
+# Eucalyptus required repositories
+#
+
+euca_repo_url:
+euca2ools_repo_url:
+epel_repo_url:
+elrepo_repo_url:
+
+#############################################################
+#
+# If you have local repositories of eucalyptus and euca2ools, specify here
+#
+
+euca_use_local_repo: 
+euca_local_repo_url: 
+euca2ools_local_repo_url: 
+
+#############################################################
+#
+# Files containing the repository definiion | Endpoint will be updated with yours
+#
+
+euca_repo_file: 
+euca2ools_repo_file: 
