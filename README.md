@@ -31,6 +31,8 @@ These variables are to be let by default as they point to the official packages 
 | elrepo_repo_url | Yes | Setup EL-Repo official repository package | RPM File
 
 
+These values define the private repos you are going to use. These are mandatory when setting **euca_use_local_repo** to *true*
+
 | Name | Default | Description | Note
 |--- |--- |--- |---
 | euca_use_local_repo| false | If you have your own eucalyptus repository, set to true | None
@@ -53,8 +55,19 @@ Here is an example of the role usage in an Eucalyptus cloud deployment
 - hosts: all
   roles:
   - JohnPreston.eucalyptus-setup
+
+```
+
+```
+
+- hosts: all
+  roles:
+  - JohnPreston.eucalyptus-setup
   vars:
-  - euca_use_local_repo: false
+  - euca_use_local_repo: true
+  - euca_local_repo_url: http://myreposerver.lan/eucalyptus/centos/6/x86_64/
+  - euca2ools_local_repo_url: http://myreposerver.lan/euca2ools/centos/6/x86_64/
+
 
 ```
 

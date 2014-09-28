@@ -1,6 +1,114 @@
 ---
 # tasks for eucalyptus-setup
 
-- include: repositories.yml
-- include: packages.yml
+####################################################################
+#
+# Repositories setup and configuration
+#
 
+- name: Setup repositories
+  yum: name={{ item }} state=present
+  with_items:
+  - "{{ euca_repo_url }}"
+  - "{{ euca2ools_repo_url }}"
+  - "{{ epel_repo_url }}"
+  - "{{ elrepo_repo_url }}"
+  tags:
+  - packages
+
+- name: Use Eucalyptus local repositories
+  lineinfile: regexp=mirrorlist line="baseurl={{ euca_local_repo_url }}" dest="{{ euca_repo_file }}"
+  tags:
+  - packages
+  when:
+  - euca_use_local_repo
+
+- name: Use euca2ools local repositories
+  lineinfile: regexp=mirrorlist line="baseurl={{ euca2ools_local_repo_url }}" dest="{{ euca2ools_repo_file }}"
+  tags:
+  - packages
+  when:
+  - euca_use_local_repo
+
+#############################################################
+#
+# Setting up packages according to its hosts groups
+#
+
+- name: Setup ntpd
+  yum: name=ntp state=present
+  tags:
+  - packages
+  notify:
+  - ntpd start
+
+- name: Setup CLC packages
+  yum: name="{{ item }}" state=present
+  with_items:
+  - eucalyptus-cloud
+  - eucalyptus-imaging-worker-image
+  - eucalyptus-load-balancer-image
+  when:
+  - inventory_hostname in groups.clc
+  tags:
+  - packages
+
+- name: Setup UFS package
+  yum: name="{{ item }}" state=present
+  with_items:
+  - eucalyptus-cloud
+  - eucalyptus-osg
+  when:
+  - inventory_hostname in groups.ufs
+  tags:
+  - packages
+
+- name: Setup SC package
+  yum: name="{{ item }}" state=present
+  with_items:
+  - eucalyptus-sc
+  when:
+  - inventory_hostname in groups.sc
+  tags:
+  - packages
+
+- name: Setup Walrus package
+  yum: name="{{ item }}" state=present
+  with_items:
+  - eucalyptus-walrus
+  when:
+  - inventory_hostname in groups.walrus
+  tags:
+  - packages
+
+- name: Setup NC packages
+  yum: name="{{ item }}" state=present
+  with_items:
+  - eucalyptus-nc
+  - tcpdump
+  - nmap
+  when:
+  - inventory_hostname in groups.nc
+  tags:
+  - packages
+
+- name: setup eucaneted for EDGE
+  yum: name="{{ item }}" state=latest
+  with_items:
+  - eucanetd
+  when:
+  - inventory_hostname in groups.nc
+  - networking_mode == "EDGE"
+  tags:
+  - packages
+
+- name: Setup CC packages
+  yum: name="{{ item }}" state=present
+  with_items:
+  - eucalyptus-cc
+  - tcpdump
+  - nmap
+  when:
+  - inventory_hostname in groups.cc
+  tags:
+  - packages
