@@ -15,6 +15,7 @@
   - "{{ elrepo_repo_url }}"
   tags:
   - packages
+  delegate_to: "{{ inventory_hostname }}"
 
 - name: Use Eucalyptus local repositories
   lineinfile: regexp=mirrorlist line="baseurl={{ euca_local_repo_url }}" dest="{{ euca_repo_file }}"
@@ -36,11 +37,14 @@
 #
 
 - name: Setup ntpd
-  yum: name=ntp state=present
+  yum: name="{{ item }}" state=present
+  with_items:
+  - ntpd
   tags:
   - packages
   notify:
   - ntpd start
+  delegate_to: "{{ inventory_hostname }}"
 
 - name: Setup CLC packages
   yum: name="{{ item }}" state=present
@@ -52,6 +56,7 @@
   - inventory_hostname in groups.clc
   tags:
   - packages
+  delegate_to: "{{ inventory_hostname }}"
 
 - name: Setup UFS package
   yum: name="{{ item }}" state=present
@@ -62,15 +67,7 @@
   - inventory_hostname in groups.ufs
   tags:
   - packages
-
-- name: Setup SC package
-  yum: name="{{ item }}" state=present
-  with_items:
-  - eucalyptus-sc
-  when:
-  - inventory_hostname in groups.sc
-  tags:
-  - packages
+  delegate_to: "{{ inventory_hostname }}"
 
 - name: Setup Walrus package
   yum: name="{{ item }}" state=present
@@ -80,27 +77,17 @@
   - inventory_hostname in groups.walrus
   tags:
   - packages
+  delegate_to: "{{ inventory_hostname }}"
 
-- name: Setup NC packages
+- name: Setup SC package
   yum: name="{{ item }}" state=present
   with_items:
-  - eucalyptus-nc
-  - tcpdump
-  - nmap
+  - eucalyptus-sc
   when:
-  - inventory_hostname in groups.nc
+  - inventory_hostname in groups.sc
   tags:
   - packages
-
-- name: setup eucaneted for EDGE
-  yum: name="{{ item }}" state=latest
-  with_items:
-  - eucanetd
-  when:
-  - inventory_hostname in groups.nc
-  - networking_mode == "EDGE"
-  tags:
-  - packages
+  delegate_to: "{{ inventory_hostname }}"
 
 - name: Setup CC packages
   yum: name="{{ item }}" state=present
@@ -112,3 +99,27 @@
   - inventory_hostname in groups.cc
   tags:
   - packages
+  delegate_to: "{{ inventory_hostname }}"
+
+- name: Setup NC packages
+  yum: name="{{ item }}" state=present
+  with_items:
+  - eucalyptus-nc
+  - tcpdump
+  - nmap
+  when:
+  - inventory_hostname in groups.nc
+  tags:
+  - packages
+  delegate_to: "{{ inventory_hostname }}"
+
+- name: setup eucaneted for EDGE
+  yum: name="{{ item }}" state=latest
+  with_items:
+  - eucanetd
+  when:
+  - inventory_hostname in groups.nc
+  - networking_mode == "EDGE"
+  tags:
+  - packages
+  delegate_to: "{{ inventory_hostname }}"

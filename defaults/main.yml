@@ -9,4 +9,5 @@ elrepo_repo_url: http://downloads.eucalyptus.com/software/eucalyptus/4.0/centos/
 euca_use_local_repo: false
 
 euca_repo_file: /etc/yum.repos.d/eucalyptus.repo
-euca2ools_repo_file: /etc/yum.repos.d/euca2ools.rep
+euca2ools_repo_file: /etc/yum.repos.d/euca2ools.repo
+
