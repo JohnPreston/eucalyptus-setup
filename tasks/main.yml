@@ -16,6 +16,7 @@
   tags:
   - packages
   delegate_to: "{{ inventory_hostname }}"
+  poll: 0
 
 - name: Use Eucalyptus local repositories
   lineinfile: regexp=mirrorlist line="baseurl={{ euca_local_repo_url }}" dest="{{ euca_repo_file }}"
@@ -31,6 +32,11 @@
   when:
   - euca_use_local_repo
 
+- name: YUM clean cache
+  shell: yum clean all ; yum clean expire-cache
+  tags:
+  - packages
+
 #############################################################
 #
 # Setting up packages according to its hosts groups
@@ -39,11 +45,12 @@
 - name: Setup ntpd
   yum: name="{{ item }}" state=present
   with_items:
-  - ntpd
+  - ntp
   tags:
   - packages
   notify:
   - ntpd start
+  poll: 0
   delegate_to: "{{ inventory_hostname }}"
 
 - name: Setup CLC packages
@@ -56,6 +63,7 @@
   - inventory_hostname in groups.clc
   tags:
   - packages
+  poll: 0
   delegate_to: "{{ inventory_hostname }}"
 
 - name: Setup UFS package
@@ -67,6 +75,7 @@
   - inventory_hostname in groups.ufs
   tags:
   - packages
+  poll: 0
   delegate_to: "{{ inventory_hostname }}"
 
 - name: Setup Walrus package
@@ -77,6 +86,7 @@
   - inventory_hostname in groups.walrus
   tags:
   - packages
+  poll: 0
   delegate_to: "{{ inventory_hostname }}"
 
 - name: Setup SC package
@@ -87,6 +97,7 @@
   - inventory_hostname in groups.sc
   tags:
   - packages
+  poll: 0
   delegate_to: "{{ inventory_hostname }}"
 
 - name: Setup CC packages
@@ -99,6 +110,7 @@
   - inventory_hostname in groups.cc
   tags:
   - packages
+  poll: 0
   delegate_to: "{{ inventory_hostname }}"
 
 - name: Setup NC packages
@@ -111,6 +123,7 @@
   - inventory_hostname in groups.nc
   tags:
   - packages
+  poll: 0
   delegate_to: "{{ inventory_hostname }}"
 
 - name: setup eucaneted for EDGE
@@ -123,3 +136,4 @@
   tags:
   - packages
   delegate_to: "{{ inventory_hostname }}"
+  poll: 0
