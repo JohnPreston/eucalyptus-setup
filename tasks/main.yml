@@ -1,22 +1,41 @@
----
-# tasks for eucalyptus-setup
-
 ####################################################################
 #
 # Repositories setup and configuration
 #
 
-- name: Setup repositories
+- name: Setup Eucalyptus repositories
   yum: name={{ item }} state=present
   with_items:
   - "{{ euca_repo_url }}"
   - "{{ euca2ools_repo_url }}"
+  tags:
+  - packages
+  delegate_to: "{{ inventory_hostname }}"
+  poll: 0
+
+- name: Setup EPEL repo
+  yum: name={{ item }} state=present
+  with_items:
   - "{{ epel_repo_url }}"
   - "{{ elrepo_repo_url }}"
   tags:
   - packages
   delegate_to: "{{ inventory_hostname }}"
   poll: 0
+  when:
+  - epel_replace
+
+- name: Setup ELRepo
+  yum: name={{ item }} state=present
+  with_items:
+  - "{{ epel_repo_url }}"
+  - "{{ elrepo_repo_url }}"
+  tags:
+  - packages
+  delegate_to: "{{ inventory_hostname }}"
+  poll: 0
+  when:
+  - elrepo_replace
 
 - name: Use Eucalyptus local repositories
   lineinfile: regexp=mirrorlist line="baseurl={{ euca_local_repo_url }}" dest="{{ euca_repo_file }}"
@@ -36,6 +55,8 @@
   shell: yum clean all ; yum clean expire-cache
   tags:
   - packages
+  when:
+  - flush_yum
 
 #############################################################
 #
@@ -48,10 +69,13 @@
   - ntp
   tags:
   - packages
-  notify:
-  - ntpd start
   poll: 0
   delegate_to: "{{ inventory_hostname }}"
+
+- name: Starts NTPD
+  service: name=ntpd state=restarted
+  tags:
+  - packages
 
 - name: Setup CLC packages
   yum: name="{{ item }}" state=present

@@ -12,11 +12,16 @@ Requirements
 hosts:
 
 - clc | Cloud Controller
+
 - ufs | User Facing Services
-- walrus | S3 builtin-backend
+
 - cc | Cluster Controllers
+
 - sc | Storage Controllers
+
 - nc | Node Controllers
+
+- walrus | S3 builtin-backend
 
 Role Variables
 --------------
@@ -38,7 +43,9 @@ These values define the private repos you are going to use. These are mandatory 
 | euca_use_local_repo| false | If you have your own eucalyptus repository, set to true | None
 | euca_local_repo_url | None | Specify the URL of your own Eucalyptus repository | Must be an URL
 | euca2ools_local_repo_url | None | Specify the URL of your own euca2ools repository | Must be an URL
-
+| epel_replace | true | Defines if the epel repo is installed by the playbook | None
+| elrepo_replace | true | Defines if the elrepo is installed by the playbook | None
+| flush_yum | true | Defines if the yum cache should be flushed | None
 
 Dependencies
 ------------
