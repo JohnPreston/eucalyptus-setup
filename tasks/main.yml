@@ -10,8 +10,6 @@
   - "{{ euca2ools_repo_url }}"
   tags:
   - packages
-  delegate_to: "{{ inventory_hostname }}"
-  poll: 0
 
 - name: Setup EPEL repo
   yum: name={{ item }} state=present
@@ -20,8 +18,6 @@
   - "{{ elrepo_repo_url }}"
   tags:
   - packages
-  delegate_to: "{{ inventory_hostname }}"
-  poll: 0
   when:
   - epel_replace
 
@@ -32,8 +28,6 @@
   - "{{ elrepo_repo_url }}"
   tags:
   - packages
-  delegate_to: "{{ inventory_hostname }}"
-  poll: 0
   when:
   - elrepo_replace
 
@@ -69,8 +63,6 @@
   - ntp
   tags:
   - packages
-  poll: 0
-  delegate_to: "{{ inventory_hostname }}"
 
 - name: Starts NTPD
   service: name=ntpd state=restarted
@@ -87,8 +79,6 @@
   - inventory_hostname in groups.clc
   tags:
   - packages
-  poll: 0
-  delegate_to: "{{ inventory_hostname }}"
 
 - name: Setup UFS package
   yum: name="{{ item }}" state=present
@@ -99,8 +89,6 @@
   - inventory_hostname in groups.ufs
   tags:
   - packages
-  poll: 0
-  delegate_to: "{{ inventory_hostname }}"
 
 - name: Setup Walrus package
   yum: name="{{ item }}" state=present
@@ -110,8 +98,6 @@
   - inventory_hostname in groups.walrus
   tags:
   - packages
-  poll: 0
-  delegate_to: "{{ inventory_hostname }}"
 
 - name: Setup SC package
   yum: name="{{ item }}" state=present
@@ -121,8 +107,6 @@
   - inventory_hostname in groups.sc
   tags:
   - packages
-  poll: 0
-  delegate_to: "{{ inventory_hostname }}"
 
 - name: Setup CC packages
   yum: name="{{ item }}" state=present
@@ -134,8 +118,6 @@
   - inventory_hostname in groups.cc
   tags:
   - packages
-  poll: 0
-  delegate_to: "{{ inventory_hostname }}"
 
 - name: Setup NC packages
   yum: name="{{ item }}" state=present
@@ -147,8 +129,6 @@
   - inventory_hostname in groups.nc
   tags:
   - packages
-  poll: 0
-  delegate_to: "{{ inventory_hostname }}"
 
 - name: setup eucaneted for EDGE
   yum: name="{{ item }}" state=latest
@@ -159,5 +139,3 @@
   - networking_mode == "EDGE"
   tags:
   - packages
-  delegate_to: "{{ inventory_hostname }}"
-  poll: 0
