@@ -13,6 +13,8 @@ euca2ools_local_repo_url:
 epel_replace: true
 elrepo_replace: true
 
+yum_behaviour: present
+
 flush_yum: true
 
 euca_repo_file: /etc/yum.repos.d/eucalyptus.repo

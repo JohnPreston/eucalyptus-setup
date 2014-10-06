@@ -28,24 +28,25 @@ Role Variables
 
 These variables are to be let by default as they point to the official packages repositories. Change only if you know what you are doing.
 
-| Name | Has default ? | Description | Note
+| Parameter | Required | Default | Description
 |--- |--- |--- |---
-| euca_repo_url | Yes | Setup Eucalyptus cloud official repository package | RPM file
-| euca2ools_repo_url | Yes | Setup euca2ools official repostory package | RPM file
-| epel_repo_url | Yes | Setup EPEL official repository package | RPM file
-| elrepo_repo_url | Yes | Setup EL-Repo official repository package | RPM File
+| euca_repo_url | Yes | [Eucalyptus latest](https://www.eucalyptus.com/docs/eucalyptus/4.0/#install-guide/installing_euca_release.html)  | Eucalyptus release repo RPM
+| euca2ools_repo_url | Yes | [euca2ools latest](https://www.eucalyptus.com/docs/eucalyptus/4.0/#install-guide/installing_euca_release.html)  | euca2ools release repo RPM
+| epel_repo_url | Yes | [Epel Latest](http://downloads.eucalyptus.com/software/eucalyptus/4.0/centos/6/x86_64/epel-release-6.noarch.rpm) | EPEL latest repo RPM
+| elrepo_repo_url | Yes | [ELrepo latest](http://downloads.eucalyptus.com/software/eucalyptus/4.0/centos/6/x86_64/elrepo-release-6.noarch.rpm)   | ELrepo latest RPM
 
 
 These values define the private repos you are going to use. These are mandatory when setting **euca_use_local_repo** to *true*
 
-| Name | Default | Description | Note
+| Parameter | Required | Default | Note
 |--- |--- |--- |---
-| euca_use_local_repo| false | If you have your own eucalyptus repository, set to true | None
-| euca_local_repo_url | None | Specify the URL of your own Eucalyptus repository | Must be an URL
-| euca2ools_local_repo_url | None | Specify the URL of your own euca2ools repository | Must be an URL
-| epel_replace | true | Defines if the epel repo is installed by the playbook | None
-| elrepo_replace | true | Defines if the elrepo is installed by the playbook | None
-| flush_yum | true | Defines if the yum cache should be flushed | None
+| euca_use_local_repo | No | false | If you have your own eucalyptus repository, set to true
+| euca_local_repo_url | No | None | Specify the URL of your own Eucalyptus repository
+| euca2ools_local_repo_url | No | None | Specify the URL of your own euca2ools repository
+| epel_replace | No | true | Defines if the epel repo is installed by the playbook
+| elrepo_replace | No | true | Defines if the elrepo is installed by the playbook
+| flush_yum | No | true | Defines if the yum cache should be flushed
+| yum_behaviour | No | present | Defines how yum is going to seek for packages. Latest will allow upgrades to newest packages.
 
 Dependencies
 ------------

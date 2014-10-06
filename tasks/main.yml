@@ -58,7 +58,7 @@
 #
 
 - name: Setup ntpd
-  yum: name="{{ item }}" state=present
+  yum: name="{{ item }}" state="{{ yum_behaviour }}"
   with_items:
   - ntp
   tags:
@@ -70,7 +70,7 @@
   - packages
 
 - name: Setup CLC packages
-  yum: name="{{ item }}" state=present
+  yum: name="{{ item }}" state="{{ yum_behaviour }}"
   with_items:
   - eucalyptus-cloud
   - eucalyptus-imaging-worker-image
@@ -81,7 +81,7 @@
   - packages
 
 - name: Setup UFS package
-  yum: name="{{ item }}" state=present
+  yum: name="{{ item }}" state="{{ yum_behaviour }}"
   with_items:
   - eucalyptus-cloud
   - eucalyptus-osg
@@ -91,7 +91,7 @@
   - packages
 
 - name: Setup Walrus package
-  yum: name="{{ item }}" state=present
+  yum: name="{{ item }}" state="{{ yum_behaviour }}"
   with_items:
   - eucalyptus-walrus
   when:
@@ -100,7 +100,7 @@
   - packages
 
 - name: Setup SC package
-  yum: name="{{ item }}" state=present
+  yum: name="{{ item }}" state="{{ yum_behaviour }}"
   with_items:
   - eucalyptus-sc
   when:
@@ -109,7 +109,7 @@
   - packages
 
 - name: Setup CC packages
-  yum: name="{{ item }}" state=present
+  yum: name="{{ item }}" state="{{ yum_behaviour }}"
   with_items:
   - eucalyptus-cc
   - tcpdump
@@ -120,7 +120,7 @@
   - packages
 
 - name: Setup NC packages
-  yum: name="{{ item }}" state=present
+  yum: name="{{ item }}" state="{{ yum_behaviour }}"
   with_items:
   - eucalyptus-nc
   - tcpdump
