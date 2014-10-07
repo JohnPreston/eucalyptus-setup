@@ -47,6 +47,7 @@ These values define the private repos you are going to use. These are mandatory 
 | elrepo_replace | No | true | Defines if the elrepo is installed by the playbook
 | flush_yum | No | true | Defines if the yum cache should be flushed
 | yum_behaviour | No | present | Defines how yum is going to seek for packages. Latest will allow upgrades to newest packages.
+| gpg_check | No | true | Defines if yum must take GPGChecks in account
 
 Dependencies
 ------------
