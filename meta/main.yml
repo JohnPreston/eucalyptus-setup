@@ -2,7 +2,7 @@
 galaxy_info:
   author: John Mille
   description: Setup all packages on eucalyptus components according to their group-role
-  company: Eucalyptus
+  company: John Mille
   min_ansible_version: 1.6
   platforms:
   - name: RHEL
